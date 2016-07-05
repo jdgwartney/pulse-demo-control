@@ -22,6 +22,7 @@ setup(
     author='David Gwartney',
     author_email='david_gwartney@bmc.com',
     packages=['tsctl', ],
+    package_data={'tsctl': ['templates/*.html']},
     license='Apache 2',
     description='Python Bindings for the TrueSight Pulse REST APIs',
     long_description=open('README.txt').read(),
