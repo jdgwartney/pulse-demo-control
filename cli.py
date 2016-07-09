@@ -17,6 +17,7 @@
 
 import argparse
 import requests
+from cpu import HostCpuControl
 
 
 class ControlCLI(object):
@@ -24,35 +25,34 @@ class ControlCLI(object):
     def __init__(self):
         self._command_map = {}
         self._command_map['cpu-load'] = self._stress_host
+        self._commands = []
 
-    def _stress_host(self):
-        host = self._args.host
-        url = "http://127.0.0.1:5000/host/cpu?hostname={0}".format(host)
-        print(url)
-        r = requests.post(url=url)
+        self._commands.append(HostCpuControl())
+
+
 
     def _arguments(self):
         parser = argparse.ArgumentParser()
         parser.add_argument('-u', '--user', action='store', help='User to authenticate with')
-        subparsers = parser.add_subparsers(help='Performance commands', dest="command")
+        sub_parser = parser.add_subparsers(help='Performance commands', dest="command")
 
-        create_parser = subparsers.add_parser('cpu-load', help='Stress the CPU on a host')
-        create_parser.add_argument('--host', action='store', dest='host', required=True, help='Name of the host to stress the CPU')
-
-        create_parser = subparsers.add_parser('disk-space', help='Fill up the disk on a host')
+        create_parser = sub_parser.add_parser('disk-space', help='Fill up the disk on a host')
         create_parser.add_argument('--host', action='store', help='Name of the host to fill up the disk space')
 
-        create_parser = subparsers.add_parser('disk-load', help='Load up the disk on a host')
+        create_parser = sub_parser.add_parser('disk-load', help='Load up the disk on a host')
         create_parser.add_argument('--host', action='store', help='Name of the host to load up the disk')
 
-        create_parser = subparsers.add_parser('memory-load', help='Use memory on the host')
+        create_parser = sub_parser.add_parser('memory-load', help='Use memory on the host')
         create_parser.add_argument('--host', action='store', help='Name of the host to use memory')
+
+        for command in self._commands:
+            command.add_parser(sub_parser)
 
         self._args = parser.parse_args()
 
     def _run(self):
-        command = self._command_map[self._args.command]
-        command()
+        command = self._commands[self._args.command]
+        command.handle_arguments(command)
 
     def execute(self):
 

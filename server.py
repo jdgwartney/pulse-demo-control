@@ -63,6 +63,11 @@ def user(name):
 def login():
     pass
 
+@app.route('/boot', methods=['GET'])
+def boot():
+    return render_template('myboot.html')
+
+
 
 def main():
     print(os.path.abspath(os.curdir))
