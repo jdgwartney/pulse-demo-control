@@ -1,4 +1,4 @@
-from application.api.scenarios.cpu_load import Scenario
+from application.api.scenarios.scenario import Scenario
 
 
 class BadCodePush(Scenario):

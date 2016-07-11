@@ -18,10 +18,10 @@ class Scenario(Resource):
         :return: response
         """
 
-        # scenario = self._scenarios[scenario_id]
-        # args = {"action_id": action_id}
-        # scenario.execute(args)
+        scenario = self._scenarios[int(scenario_id)]
         action_id = request.args['action_id']
+        args = {"action_id": action_id}
+        scenario.execute(args)
 
         return make_response("<h1>{0} {1}, args: {2}</h1>".format(request.method, request.path, action_id))
 
