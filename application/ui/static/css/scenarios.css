@@ -6,9 +6,5 @@ li button {
 
 #control {
     list-style-type: none;
-    float: left;
 }
 
-#control p {
-    display: inline;
-}

@@ -9,16 +9,25 @@
 {% block content %}
     <ul id="control">
         <li>
-            <button type="button" class="btn btn-primary">Scenario 1</button>
+            <h2>CPU load on Web Server</h2>
             <p>Show impact of increased CPU on a web page response time</p>
+            <button type="button" class="btn btn-danger btn-sm">Add CPU load to web-1</button>
         </li>
         <li>
-            <button type="button" class="btn btn-primary">Scenario 2</button>
+            <h2>Bad code push impacts Web Server</h2>
             <p>Show impact of bad code push CPU on a web page loading</p>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger btn-sm">Push Bad Code</button>
+                <button type="button" class="btn btn-success btn-sm">Revert Bad Code</button>
+            </div>
         </li>
         <li>
-            <button type="button" class="btn btn-primary">Scenario 3</button>
-            <p>Show impact of web server offline web page response time</p>
+            <h2>Web Server Offline</h2>
+            <p>Show impact of web server going offline web page response time</p>
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger btn-sm">Offline Web Server</button>
+                <button type="button" class="btn btn-success btn-sm">Online Web Server</button>
+            </div>
         </li>
     </ul>
 {% endblock %}
