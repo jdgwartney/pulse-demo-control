@@ -4,10 +4,21 @@ uis = Blueprint('ui', __name__, template_folder='templates', static_folder='stat
 
 
 @uis.route('/')
-def home():
+def index():
     return render_template("index.html")
 
 
 @uis.route('/login')
 def login():
     return render_template("login.html")
+
+
+@uis.route('/control')
+def control():
+    return render_template("control.html")
+
+
+
+
+
+
