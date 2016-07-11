@@ -18,6 +18,11 @@ def control():
     return render_template("control.html")
 
 
+@uis.route('/scenarios')
+def scenarios():
+    return render_template("scenarios.html")
+
+
 
 
 
