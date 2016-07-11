@@ -4,6 +4,11 @@ li button {
     margin-bottom: 20px;
 }
 
-#scenario_control {
+#control {
     list-style-type: none;
+    float: left;
+}
+
+#control p {
+    display: inline;
 }

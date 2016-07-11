@@ -10,13 +10,14 @@
                 <span class ="icon-bar"></span>
                 <span class ="icon-bar"> </span >
             </button >
-            <a class ="navbar-brand" href="/">Demo Control</a>
+            <a class ="navbar-brand" href="{{ url_for('ui.index', _external=False) }}">Demo Control</a>
         </div>
         <div class ="navbar-collapse collapse">
             <ul class ="nav navbar-nav">
-                <li><a href ="{{ url_for('ui.login', _external=True) }}">Login</a></li>
-                <li><a href ="{{ url_for('ui.control', _external=True) }}">Control</a></li>
-                <li><a href ="{{ url_for('ui.scenarios', _external=True) }}">Scenarios</a></li>
+                <!--
+                <li><a href ="{{ url_for('ui.login', _external=False) }}">Login</a></li>
+                -->
+                <li><a href ="{{ url_for('ui.scenarios', _external=False) }}">Scenarios</a></li>
             </ul>
         </div>
     </div>
