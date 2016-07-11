@@ -10,7 +10,7 @@ class Scenario(object):
     def id(self):
         return self._id;
 
-    def execute(self, **kwargs):
+    def execute(self, action_id):
         pass
 
 

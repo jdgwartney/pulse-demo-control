@@ -20,8 +20,7 @@ class Scenario(Resource):
 
         scenario = self._scenarios[int(scenario_id)]
         action_id = request.args['action_id']
-        args = {"action_id": action_id}
-        scenario.execute(args)
+        scenario.execute(action_id)
 
         return make_response("<h1>{0} {1}, args: {2}</h1>".format(request.method, request.path, action_id))
 

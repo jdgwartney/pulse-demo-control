@@ -9,7 +9,6 @@ class CPULoadOnWebServer(Scenario):
 
         self._actions[1] = CPULoadAction(1, "52.53.222.210")
 
-    def execute(self, **kwargs):
-        action_id = kwargs['action_id']
-        action = self._actions[action_id]
+    def execute(self, action_id):
+        action = self._actions[int(action_id)]
         action.run()
