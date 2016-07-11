@@ -16,6 +16,9 @@
 #
 
 from fabric.api import run, execute, task, env
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def stress_cpu(timeout):
@@ -23,7 +26,9 @@ def stress_cpu(timeout):
     Run the stress program to load the CPU on the server
     :return: None
     """
-    run("stress --cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout {0}s".format(timeout))
+    command = "stress --cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout {0}s".format(timeout))
+    logger.debug(command)
+    run(command)
 
 @task
 def cpu_load(host, timeout=60):
