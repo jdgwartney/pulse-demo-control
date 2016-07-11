@@ -2,8 +2,15 @@ from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from application.ui import uis
 from application.api import apis
+from flask_log import Logging
+import logging
+
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+
+app.config['FLASK_LOG_LEVEL'] = 'DEBUG'
+flask_log = Logging(app)
 
 Bootstrap(app)
 
@@ -21,10 +28,6 @@ def internal_server_error(e):
 app.register_blueprint(uis, url_prefix='/ui')
 app.register_blueprint(apis, url_prefix='/v1/api')
 
-# import application.models
-# import application.views
 
-print(app.url_map)
+logger.debug(app.url_map)
 
-if __name__ == "__main__":
-    app.run()
