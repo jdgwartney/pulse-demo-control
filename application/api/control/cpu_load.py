@@ -18,12 +18,20 @@
 from fabric.api import run, execute, task, env
 
 
-def cpu_load():
+def stress_cpu():
+    """
+    Run the stress program to load the CPU on the server
+    :return: None
+    """
     run('stress --cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout 60s')
 
-# This is the user-facing task invoked on the command line.
 @task
-def deploy(host):
+def cpu_load(host):
+    """
+    Fabric tasks to increase the load on a server
+    :param host: Name of the host to stress the CPU
+    :return: None
+    """
     # This is the magic you don't get with @hosts or @roles.
     # Even lazy-loading roles require you to declare available roles
     # beforehand. Here, the sky is the limit.
@@ -32,8 +40,8 @@ def deploy(host):
 
     # Put this dynamically generated host list together with the work to be
     # done.
-    execute(cpu_load, hosts=host_list)
+    execute(stress_cpu, hosts=host_list)
 
 
 if __name__ == "__main__":
-    deploy("mon-1.flybynightfares.com")
+    cpu_load("mon-1.flybynightfares.com")

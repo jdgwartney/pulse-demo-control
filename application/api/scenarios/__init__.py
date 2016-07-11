@@ -1,0 +1,1 @@
+from application.api.scenarios.cpu_load import CPULoadOnWebServer

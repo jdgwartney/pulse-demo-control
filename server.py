@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import os
+from application.api.control.cpu_load import deploy
 from flask import Flask, render_template, make_response, request
 from flask_script import Manager
-from cpu_load import deploy
 from name_form import NameForm
-import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
