@@ -26,7 +26,7 @@ def stress_cpu(timeout):
     Run the stress program to load the CPU on the server
     :return: None
     """
-    command = "stress --cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout {0}s".format(timeout))
+    command = "stress --cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout {0}s".format(timeout)
     logger.debug(command)
     run(command)
 
