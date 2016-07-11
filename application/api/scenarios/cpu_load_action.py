@@ -9,4 +9,4 @@ class CPULoadAction(Action):
         self._host = host
 
     def run(self):
-        cpu_load(self._host)
+        cpu_load(self._host, 60)

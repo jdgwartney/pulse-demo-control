@@ -18,15 +18,15 @@
 from fabric.api import run, execute, task, env
 
 
-def stress_cpu():
+def stress_cpu(timeout):
     """
     Run the stress program to load the CPU on the server
     :return: None
     """
-    run('stress --cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout 60s')
+    run("stress --cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout {0}s".format(timeout))
 
 @task
-def cpu_load(host):
+def cpu_load(host, timeout=60):
     """
     Fabric tasks to increase the load on a server
     :param host: Name of the host to stress the CPU
@@ -40,7 +40,7 @@ def cpu_load(host):
 
     # Put this dynamically generated host list together with the work to be
     # done.
-    execute(stress_cpu, hosts=host_list)
+    execute(stress_cpu, timeout, hosts=host_list)
 
 
 if __name__ == "__main__":
