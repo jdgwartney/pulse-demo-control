@@ -3,24 +3,32 @@
 
 {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" href="{{ url_for('ui.static', filename='css/control.css') }}">
+    <link rel="stylesheet" href="{{ url_for('ui.static', filename='css/scenarios.css') }}">
 {% endblock %}
 
 {% block scripts %}
-    {{super()}}
-    <script src="{{url_for('ui.static', filename='js/scenarios.js')}}"></script>
+    {{ super() }}
+    <script src="{{ url_for('ui.static', filename='js/scenarios.js') }}"></script>
 {% endblock %}
 
 {% block content %}
     <ul id="control">
         <li>
-            <h2>CPU load on Web Server</h2>
-            <p>Show impact of increased CPU on a web page response time</p>
-            <button id="action_1_1" type="button" class="btn btn-danger btn-sm">Add CPU load to web-1</button>
+            <div>
+                <div>
+                    <h2>CPU load on Web Server</h2>
+                    <p>Show impact of increased CPU on a web page response time</p>
+                </div>
+                <div>
+                    <button id="action_1_1" type="button" class="btn btn-danger btn-sm">Add CPU load to web-1</button>
+                </div>
+            </div>
         </li>
         <li>
-            <h2>Bad code push impacts Web Server</h2>
-            <p>Show impact of bad code push CPU on a web page loading</p>
+            <div>
+                <h2>Bad code push impacts Web Server</h2>
+                <p>Show impact of bad code push CPU on a web page loading</p>
+            </div>
             <div class="btn-group">
                 <button id="action_2_1" type="button" class="btn btn-danger btn-sm">Push Bad Code</button>
                 <button id="action_2_2" type="button" class="btn btn-success btn-sm">Revert Bad Code</button>
