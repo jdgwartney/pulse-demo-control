@@ -43,8 +43,10 @@ def cpu_load(host, timeout=60):
     # beforehand. Here, the sky is the limit.
     host_list = [host]
     env.use_ssh_config = True
-    if os.path.isdir("/etc/pulse-demo-control"):
-        env.ssh_config_path = '/etc/pulse-demon-control/ssh_config'
+    ssh_config_dir = '/etc/pulse-demo-control'
+    if os.path.isdir(ssh_config_dir):
+        env.ssh_config_path = os.path.join(ssh_config_dir, 'ssh_config')
+        logger.info("Reading SSH configuration from: {0}".format(env.ssh_config_path))
 
     # Put this dynamically generated host list together with the work to be
     # done.
