@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from flask_bootstrap import Bootstrap
 from application.ui import uis
 from application.api import apis
@@ -24,6 +24,9 @@ def page_not_found(e):
 def internal_server_error(e):
     return render_template('500.html'), 500
 
+@app.route('/')
+def root():
+    return redirect('/ui')
 
 app.register_blueprint(uis, url_prefix='/ui')
 app.register_blueprint(apis, url_prefix='/v1/api')
