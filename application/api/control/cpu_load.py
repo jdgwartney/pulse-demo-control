@@ -17,6 +17,7 @@
 
 from fabric.api import run, execute, task, env
 import logging
+import os
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +43,8 @@ def cpu_load(host, timeout=60):
     # beforehand. Here, the sky is the limit.
     host_list = [host]
     env.use_ssh_config = True
+    if os.path.isdir("/etc/pulse-demo-control"):
+        env.ssh_config_path = '/etc/pulse-demon-control/ssh_config'
 
     # Put this dynamically generated host list together with the work to be
     # done.
