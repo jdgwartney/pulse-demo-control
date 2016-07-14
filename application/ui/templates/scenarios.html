@@ -12,35 +12,14 @@
 {% endblock %}
 
 {% block content %}
-    <ul id="control">
-        <li>
-            <div>
-                <div>
-                    <h2>CPU load on Web Server</h2>
-                    <p>Show impact of increased CPU on a web page response time</p>
-                </div>
-                <div>
-                    <button id="action_1_1" type="button" class="btn btn-danger btn-sm">Add CPU load to web-1</button>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div>
-                <h2>Bad code push impacts Web Server</h2>
-                <p>Show impact of bad code push CPU on a web page loading</p>
-            </div>
-            <div class="btn-group">
-                <button id="action_2_1" type="button" class="btn btn-danger btn-sm">Push Bad Code</button>
-                <button id="action_2_2" type="button" class="btn btn-success btn-sm">Revert Bad Code</button>
-            </div>
-        </li>
-        <li>
-            <h2>Web Server Offline</h2>
-            <p>Show impact of web server going offline web page response time</p>
-            <div class="btn-group">
-                <button id="action_3_1" type="button" class="btn btn-danger btn-sm">Offline Web Server</button>
-                <button id="action_3_2" type="button" class="btn btn-success btn-sm">Online Web Server</button>
-            </div>
-        </li>
-    </ul>
+    <div class="container">
+        <h2>Scenarios</h2>
+        <ul id="control">
+            <li>
+                <form method="get" action="{{ url_for('ui.scenario_devops', _external=False) }}">
+                <button type="submit" class="btn btn-primary">Fly By Night Fares - DevOps In Action</button>
+                </form>
+            </li>
+        </ul>
+    </div>
 {% endblock %}

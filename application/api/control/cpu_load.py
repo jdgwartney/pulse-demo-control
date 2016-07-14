@@ -32,7 +32,7 @@ def stress_cpu(timeout):
     run(command)
 
 @task
-def cpu_load(host, timeout=60):
+def cpu_load(host_list, timeout=60):
     """
     Fabric tasks to increase the load on a server
     :param host: Name of the host to stress the CPU
@@ -41,7 +41,7 @@ def cpu_load(host, timeout=60):
     # This is the magic you don't get with @hosts or @roles.
     # Even lazy-loading roles require you to declare available roles
     # beforehand. Here, the sky is the limit.
-    host_list = [host]
+    #host_list = [host]
     env.use_ssh_config = True
     ssh_config_dir = '/etc/pulse-demo-control'
     if os.path.isdir(ssh_config_dir):

@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block title %}Scenario - Fly By Night Fares - DevOps{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('ui.static', filename='css/devops.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('ui.static', filename='js/devops.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2>Fly By Night Fares - DevOps In Action</h2>
+        <h3>The Scenario</h3>
+        <p>I am an <em>Site Reliability Engineer</em>, or <strong>SRE</strong>, for a <em>Fly By Night Fares</em>,
+            that guarantees the cheapest airfares around as long as you fly at night!. My core responsibility
+            is ensuring that users of <em>Fly By Night</em> can find the lowest fares anytime, even when the are
+            flying...at night.
+        </p>
+        <p><span class="text-primary">Fly By Night</span> employs a LAMP stack in the Amazon Cloud to service requests
+            to search for the lowest airfare
+            of any of the travel services as long as you...em….uh...<span class="text-info">FLY AT NIGHT</span>.
+        </p>
+
+        <p><span class="text-primary">Fly By Night</span> as a company is new to the online travel industry and so dove
+            in head first to learn what makes
+            their customer tick by initially launching with the minimal viable product or MVP. This strategy is
+            approachable since we have adopted the DevOps methodology whereby we minimize the time between code
+            commit and deployment into a production. The ability to rapidly deploy fixes and new features for our
+            travel customers allows us to adapt to their needs quickly. Our developers are constantly making changes
+            and rolling them out with heads up the SRE team. This act is known <strong>continuous deployment</strong>
+            and
+            is the new norm in web infrastructure environments like <span class="text-primary">Fly By Night</span.
+        </p>
+
+        <p>Our development is not haphazard, as part of Fly By Night’s development process, bug fixes and
+            new features are rigorously validate using code reviews and unit testing. It is not always possible
+            replicate our production environment or live traffic associated with it.
+        </p>
+
+        <p>But thankfully we use <span class="text-success">TrueSight Pulse</span>, a SaaS monitoring tool
+            that works at the same pace as Fly By Night with the ability to provide second updates on the health of
+            the Fly By Night infrastructure during deployments.</p>
+        <h3>The Demo</h3>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#step_1">Step 1 - Deploy Change to a
+                            Single Node</a>
+                    </h4>
+                </div>
+                <div id="step_1" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>
+                            The FBN developer has create a fixed to speed up the loading of the landing page to fly by
+                            night fares
+                            and wants to see the effects on the live site. Using TrueSight Pulse we can observe directly
+                            the before
+                            and after performance of the page loading.
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        <a onclick="open_pulse_window('http://fbn-web-2140330064.us-west-1.elb.amazonaws.com/','landing')">
+                            Landing page that requires a change to speed up response
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                            Observe the current page response time in TrueSight Pulse
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <button id="step_1_2_action" type="button" class="btn btn-primary btn-sm">Deploy Code Change
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                            Observe the new page response time in TrueSight Pulse
+                        </a>
+                    </div>
+                    <div class="panel-body">
+                        <p>The code change deployed actually increased the page response time. We need to rollback the
+                            change
+                            until we can revise the change.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#step_2">Step 2 - Revert Code
+                            Change</a>
+                    </h4>
+                </div>
+                <div id="step_2" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p> The code change deployed in the previous step was not up to par and worse then the previous
+                            version. Let's revert to the previous <strong>known good version</strong>.
+                        </p>
+                    </div>
+                    <div class="panel-body">
+                        <button id="step_2_1_action" type="button" class="btn btn-primary btn-sm">Revert Change</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#step_3">Step 3 - Revise Code
+                            Change</a>
+                    </h4>
+                </div>
+                <div id="step_3" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>Developer reviews the code along with data collected from TrueSight Pulse to find the issue
+                            with the code change that is suppose to increase performance. Developer revises the code
+                            change
+                            to get the correct performance behavior</p>
+                    </div>
+                    <div class="panel-body">
+                        <button id="step_3_1_action" type="button" class="btn btn-primary btn-sm">Revise Code</button>
+                        <div class="progress">
+                            <div id="code-fix-progress" class="progress-bar" role="progressbar"
+                                 aria-valuenow="0"
+                                 aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                <span class="sr-only">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#step_4">Step 4 - Deploy Revised Code
+                            Change</a>
+                    </h4>
+                </div>
+                <div id="step_4" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>With the code change revised and validate for enhanced response time we can perform a
+                            deployment
+                            to one of our production nodes</p>
+                    </div>
+                    <div class="panel-body">
+                        <button id="step_4_1_action" type="button" class="btn btn-primary btn-sm">Deploy Revised Code Change</button>
+                    </div>
+                    <div class="panel-body">
+                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                            Observe the new page response time in TrueSight Pulse with the revised change.
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#step_5">Step 5 - Deploy to Code Change
+                            to All Nodes</a>
+                    </h4>
+                </div>
+                <div id="step_5" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <p>With the code now fixed and validated on our production node we can now deploy to the rest
+                            of the nodes in our system.</p>
+                    </div>
+                    <div class="panel-body">
+                        <button id="step_5_1_action" type="button" class="btn btn-primary btn-sm">Deploy Code Change to All Nodes</button>
+                    </div>
+                    <div class="panel-body">
+                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                            Observe the new page response time in TrueSight Pulse with the revised change.
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
