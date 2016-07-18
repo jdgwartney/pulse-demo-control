@@ -9,6 +9,10 @@
 {% block scripts %}
     {{ super() }}
     <script src="{{ url_for('ui.static', filename='js/devops.js') }}"></script>
+    <script>
+    var landingWindow = 'http://fbn-web-2140330064.us-west-1.elb.amazonaws.com/';
+    var pulseWindow = 'https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time';
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -62,12 +66,12 @@
                         </p>
                     </div>
                     <div class="panel-body">
-                        <a onclick="launchApplication('http://fbn-web-2140330064.us-west-1.elb.amazonaws.com/','landing')">
+                        <a onclick="launchApplication(landingWindow,'landing')">
                             Landing page that requires a change to speed up response
                         </a>
                     </div>
                     <div class="panel-body">
-                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                        <a onclick="launchApplication(pulseWindow,'pulse')">
                             Observe the current page response time in TrueSight Pulse
                         </a>
                     </div>
@@ -76,7 +80,7 @@
                         </button>
                     </div>
                     <div class="panel-body">
-                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                        <a onclick="launchApplication(pulseWindow,'pulse')">
                             Observe the new page response time in TrueSight Pulse
                         </a>
                     </div>
@@ -148,7 +152,7 @@
                         <button id="step_4_1_action" type="button" class="btn btn-primary btn-sm">Deploy Revised Code Change</button>
                     </div>
                     <div class="panel-body">
-                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                        <a onclick="launchApplication(pulseWindow,'pulse')">
                             Observe the new page response time in TrueSight Pulse with the revised change.
                         </a>
                     </div>
@@ -170,7 +174,7 @@
                         <button id="step_5_1_action" type="button" class="btn btn-primary btn-sm">Deploy Code Change to All Nodes</button>
                     </div>
                     <div class="panel-body">
-                        <a onclick="open_pulse_window('https://pulse.truesight.bmc.com/8392/%2BFBN%20Web%20Response%20Time','pulse')">
+                        <a onclick="launchApplication(pulseWindow,'pulse')">
                             Observe the new page response time in TrueSight Pulse with the revised change.
                         </a>
                     </div>
