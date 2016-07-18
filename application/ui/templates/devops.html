@@ -15,35 +15,33 @@
     <div class="container">
         <h2>Fly By Night Fares - DevOps In Action</h2>
         <h3>The Scenario</h3>
-        <p>I am an <em>Site Reliability Engineer</em>, or <strong>SRE</strong>, for a <em>Fly By Night Fares</em>,
-            that guarantees the cheapest airfares around as long as you fly at night!. My core responsibility
-            is ensuring that users of <em>Fly By Night</em> can find the lowest fares anytime, even when the are
-            flying...at night.
-        </p>
+        <p>I am a <em>Site Reliability Engineer</em> (SRE) for Fly By Night Fares. We guarantee the cheapest airfares around
+            as long as you fly at night! My core responsibility is ensuring that users of <em>Fly By Night Fares</em>
+            can find the lowest fares anytime, even when they are flying...at night.</p>
         <p><span class="text-primary">Fly By Night</span> employs a LAMP stack in the Amazon Cloud to service requests
             to search for the lowest airfare
             of any of the travel services as long as you...em….uh...<span class="text-info">FLY AT NIGHT</span>.
         </p>
 
-        <p><span class="text-primary">Fly By Night</span> as a company is new to the online travel industry and so dove
-            in head first to learn what makes
-            their customer tick by initially launching with the minimal viable product or MVP. This strategy is
-            approachable since we have adopted the DevOps methodology whereby we minimize the time between code
-            commit and deployment into a production. The ability to rapidly deploy fixes and new features for our
-            travel customers allows us to adapt to their needs quickly. Our developers are constantly making changes
-            and rolling them out with heads up the SRE team. This act is known <strong>continuous deployment</strong>
-            and
-            is the new norm in web infrastructure environments like <span class="text-primary">Fly By Night</span.
+        <img id="arch-diagram" src="{{ url_for('ui.static', filename='img/arch.png') }}"/>
+        <p>
+            Fly By Night Fares is a startup new to the online travel industry and so launched with a minimal viable
+            product or MVP. We use a DevOps methodology to minimize the time between code commit and deployment
+            into production. Our developers are constantly making changes and rolling them in coordination
+            with the SRE team. This act is known <em>continuous deployment</em> and is the new norm in web infrastructure
+            environments like Fly By Night Fares.
+        </p>
+        <p>
+            Because we move so quickly and our market changes so rapidly, we don’t rely solely on testing to
+            tell us whether our code is solid. We do code reviews, unit test, smoke tests and load testing
+            in staging. But we don’t assume that means code will work in production.
+        </p>
+        <p>
+            We use <span class="text-success">TrueSight Pulse</span>, a SaaS monitoring tool that works at the same
+            pace as Fly By Night Fares with the ability to provide second-by-second updates on the
+            health of the Fly By Night Fares infrastructure during deployments.
         </p>
 
-        <p>Our development is not haphazard, as part of Fly By Night’s development process, bug fixes and
-            new features are rigorously validate using code reviews and unit testing. It is not always possible
-            replicate our production environment or live traffic associated with it.
-        </p>
-
-        <p>But thankfully we use <span class="text-success">TrueSight Pulse</span>, a SaaS monitoring tool
-            that works at the same pace as Fly By Night with the ability to provide second updates on the health of
-            the Fly By Night infrastructure during deployments.</p>
         <h3>The Demo</h3>
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
@@ -64,7 +62,7 @@
                         </p>
                     </div>
                     <div class="panel-body">
-                        <a onclick="open_pulse_window('http://fbn-web-2140330064.us-west-1.elb.amazonaws.com/','landing')">
+                        <a onclick="launchApplication('http://fbn-web-2140330064.us-west-1.elb.amazonaws.com/','landing')">
                             Landing page that requires a change to speed up response
                         </a>
                     </div>
