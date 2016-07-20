@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-#
 # Copyright 2015 BMC Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,10 +14,13 @@
 #
 from flask import Flask, render_template, redirect
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
 from application.ui import uis
 from application.api import apis
 from flask_log import Logging
 import logging
+import os
+from application.db.command import Command
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +30,10 @@ app.config['FLASK_LOG_LEVEL'] = 'DEBUG'
 flask_log = Logging(app)
 
 Bootstrap(app)
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///' + os.path.join( basedir, 'data.sqlite')
+db = SQLAlchemy(app)
 
 
 @app.errorhandler(404)
@@ -44,8 +49,8 @@ def internal_server_error(e):
 def root():
     return redirect('/ui')
 
-app.register_blueprint(uis, url_prefix='/ui')
 app.register_blueprint(apis, url_prefix='/v1/api')
+app.register_blueprint(uis, url_prefix='/ui')
 
 
 logger.debug(app.url_map)
