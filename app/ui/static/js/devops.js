@@ -2,7 +2,7 @@ $('#reset').click(function () {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: "/v1/api/action?scenario=devops&action=bad_page_to_host",
+        url: "/v1/api/action?scenario=devops&action=reset",
         success: function (data) {
         }
     })
