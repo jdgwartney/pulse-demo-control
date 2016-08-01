@@ -75,14 +75,14 @@ add_and_commit([action_1, action_2, action_3, action_4, action_5])
                                       revision=BASE_APP_REVISION)
 
 # Action 1 Commands
-command_1 = Command(name='Set application to base revision',
+command_1 = Command(name='set base revision',
                     cmd=cmd,
                     args=args,
                     order=1,
                     action_id=action_1.id)
 
 (cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID, instance_ids=['foo', 'bar'])
-command_2 = Command(name='Deploy application base revision',
+command_2 = Command(name='deploy base revision',
                     cmd=cmd,
                     args=args,
                     order=2,
