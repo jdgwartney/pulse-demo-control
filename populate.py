@@ -20,8 +20,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-# db.drop_all()
-# db.create_all()
+db.drop_all()
+db.create_all()
 
 
 def add_and_commit(items):

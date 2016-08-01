@@ -37,7 +37,7 @@ class Command(db.Model):
     id = db.Column(db.Integer,  primary_key=True)
     name = db.Column(db.String(64), unique=True)
     cmd = db.Column(db.String(64))
-    args = db.Column(db.String(128))
+    args = db.Column(db.String(512))
     order = db.Column(db.Integer, unique=True)
     action_id = db.Column(db.Integer, db.ForeignKey('actions.id'))
 
