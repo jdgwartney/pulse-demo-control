@@ -23,11 +23,11 @@ class Action(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    vals = db.Column(db.String(128), unique=True)
-    #commands = models.relationship('Command', backref='primaryjoin')
+    commands = db.relationship('Command', backref='Action', lazy='dynamic')
+    scenario_id = db.Column(db.Integer, db.ForeignKey('scenarios.id'))
 
     def __repr__(self):
-        return "<Action('{0}', '{1}')".format(self.name, self.vals)
+        return "Action({0}, '{1}', {2})".format(self.id, self.name, self.scenario_id)
 
 
 class Command(db.Model):
@@ -38,17 +38,20 @@ class Command(db.Model):
     name = db.Column(db.String(64), unique=True)
     cmd = db.Column(db.String(64))
     args = db.Column(db.String(128))
+    action_id = db.Column(db.Integer, db.ForeignKey('actions.id'))
 
     def __repr__(self):
-        return "Command('{0}', '{1}')".format(self.name, self.args)
+        return "Command({0}, '{1}', '{2}', '{3}', {4})".format(
+            self.id, self.name, self.cmd, self.args, self.action_id)
 
 
 class Scenario(db.Model):
+
     __tablename__ = 'scenarios'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    # actions = models.relationship('Action', backref='role', lazy='dynamic')
+    actions = db.relationship('Action', backref='Scenario', lazy='dynamic')
 
     def __repr__(self):
-        return "<Command('{0}', '{1}')".format(self.name, self.values)
+        return "Scenario({0}, '{1}')".format(self.id, self.name)
