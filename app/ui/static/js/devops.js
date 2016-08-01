@@ -1,12 +1,52 @@
-$('#action_1_1').click(function () {
+$('#reset').click(function () {
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: "/v1/api/scenario/1?action_id=1",
+        url: "/v1/api/action?scenario=devops&action=bad_page_to_host",
         success: function (data) {
         }
     })
 });
+$('#bad_page_to_host').click(function () {
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/v1/api/action?scenario=devops&action=bad_page_to_host",
+        success: function (data) {
+        }
+    })
+});
+
+$('#revert_bad_page_to_host').click(function () {
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/v1/api/action?scenario=devops&action=revert_bad_page_to_host",
+        success: function (data) {
+        }
+    })
+});
+
+$('#improved_page_to_host').click(function () {
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/v1/api/action?scenario=devops&action=improved_page_to_host",
+        success: function (data) {
+        }
+    })
+});
+
+$('#improved_page_to_all_hosts').click(function () {
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "/v1/api/action?scenario=devops&action=improved_page_to_all_hosts",
+        success: function (data) {
+        }
+    })
+});
+
 
 function launchApplication(l_url, l_windowName) {
     if (typeof launchApplication.winRefs == 'undefined') {
@@ -34,7 +74,7 @@ function launchApplication(l_url, l_windowName) {
     }
 }
 
-$("#step_3_1_action").click(function () {
+$("#fix_bad_page").click(function () {
     var progression = 0,
         progress = setInterval(function () {
             $('#code-fix-progress').css("width", progression + "%");

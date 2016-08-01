@@ -19,7 +19,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 db.drop_all()
 db.create_all()
 
@@ -49,9 +48,30 @@ def aws_opsworks_create_deployment(stack_id, app_id, instance_ids):
             ))
 
 
-# Define our the name of our Scenario
-scenario_name = 'DevOps'
-scenario_devops = Scenario(name=scenario_name)
+#
+# CPU Load
+#
+cpu_load_name = "cpu_load"
+scenario_cpu_load = Scenario(name=cpu_load_name)
+add_and_commit([scenario_cpu_load])
+
+action = Action(name='load_host', scenario_id=scenario_cpu_load.id)
+add_and_commit([action])
+
+cmd = 'stress'
+args = '-cpu 8 --io 4 --vm 2 --vm-bytes 128M --timeout 60s'
+command = Command(name='load_cpu', cmd=cmd, args=args, host='web-1', order=1, action_id=action.id)
+
+add_and_commit([command])
+
+#
+# DevOps
+#
+
+devops_name = 'devops'
+devops_title = 'Fly By Night Fares - DevOps In Action'
+devops_page = 'ui.scenario_devops'
+scenario_devops = Scenario(name=devops_name, title=devops_title, page=devops_page)
 
 add_and_commit([scenario_devops])
 
@@ -60,37 +80,106 @@ add_and_commit([scenario_devops])
 STACK_ID = 'e9c7a15b-180a-42bb-becb-40fed055f4bc'
 APPLICATION_ID = 'ae0a0232-a545-4250-99a3-5243d9b2c570'
 
-BASE_APP_REVISION = '1'
-BAD_APP_REVISION = '2'
+BASE_APP_BRANCH = 'version-1'
+BAD_APP_BRANCH = 'version-2'
+IMPROVED_APP_BRANCH = 'version-3'
 
-action_1 = Action(name='Reset Scenario', scenario_id=scenario_devops.id)
-action_2 = Action(name='Push Bad Page To Single Host', scenario_id=scenario_devops.id)
-action_3 = Action(name='Revert Bad Page To Single Host', scenario_id=scenario_devops.id)
-action_4 = Action(name='Push Improved Page To Single Host', scenario_id=scenario_devops.id)
-action_5 = Action(name='Push Improved Page To All Hosts', scenario_id=scenario_devops.id)
+WEB_TEST_INSTANCES = [
+    '4f9685d9-43f9-4926-81be-4b815f7086f2'
+]
+
+WEB_INSTANCES = [
+    '4f9685d9-43f9-4926-81be-4b815f7086f2',
+    '36bacec9-63e1-4739-b63c-0720dd05ef01',
+    '0e8577f3-dde4-4ec0-b020-35c62f6d2652',
+    '46932149-a21d-4570-869e-954baf3a46e9',
+    '91f84a7b-c7d3-443c-9dc9-ce4c3692310d'
+]
+
+action_1 = Action(name='reset', scenario_id=scenario_devops.id)
+action_2 = Action(name='bad_page_to_host', scenario_id=scenario_devops.id)
+action_3 = Action(name='revert_bad_page_to_host', scenario_id=scenario_devops.id)
+action_4 = Action(name='improved_page_to_host', scenario_id=scenario_devops.id)
+action_5 = Action(name='improved_page_to_all_hosts', scenario_id=scenario_devops.id)
 
 add_and_commit([action_1, action_2, action_3, action_4, action_5])
 
-(cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID,
-                                      revision=BASE_APP_REVISION)
-
 # Action 1 Commands
-command_1 = Command(name='set base revision',
-                    cmd=cmd,
-                    args=args,
-                    order=1,
-                    action_id=action_1.id)
+(cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=BASE_APP_BRANCH)
+command_1 = Command(name='set base revision', cmd=cmd, args=args, order=1, action_id=action_1.id)
 
-(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID, instance_ids=['foo', 'bar'])
-command_2 = Command(name='deploy base revision',
-                    cmd=cmd,
-                    args=args,
-                    order=2,
-                    action_id=action_1.id)
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
+                                             instance_ids=WEB_INSTANCES)
+command_2 = Command(name='deploy base revision', cmd=cmd, args=args, order=2, action_id=action_1.id)
 
 add_and_commit([command_1, command_2])
 
 # Action 2 Commands
 
+(cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=BAD_APP_BRANCH)
+command_1 = Command(name='set bad revision',
+                    cmd=cmd,
+                    args=args,
+                    order=1,
+                    action_id=action_2.id)
 
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
+                                             instance_ids=WEB_TEST_INSTANCES)
+command_2 = Command(name='deploy bad revision',
+                    cmd=cmd,
+                    args=args,
+                    order=2,
+                    action_id=action_2.id)
 
+add_and_commit([command_1, command_2])
+add_and_commit([command_1])
+
+# Action 3 Commands
+
+(cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=BASE_APP_BRANCH)
+command_1 = Command(name='set base revision',
+                    cmd=cmd,
+                    args=args,
+                    order=1,
+                    action_id=action_3.id)
+
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
+                                             instance_ids=WEB_TEST_INSTANCES)
+command_2 = Command(name='deploy base revision',
+                    cmd=cmd,
+                    args=args,
+                    order=2,
+                    action_id=action_3.id)
+
+add_and_commit([command_1, command_2])
+
+# Action 4 Commands
+
+(cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=IMPROVED_APP_BRANCH)
+command_1 = Command(name='set improved revision',
+                    cmd=cmd,
+                    args=args,
+                    order=1,
+                    action_id=action_4.id)
+
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
+                                             instance_ids=WEB_TEST_INSTANCES)
+command_2 = Command(name='deploy improved revision',
+                    cmd=cmd,
+                    args=args,
+                    order=2,
+                    action_id=action_4.id)
+
+add_and_commit([command_1, command_2])
+
+# Action 5 Commands
+
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
+                                             instance_ids=WEB_INSTANCES)
+command_1 = Command(name='deploy improved revision to all hosts',
+                    cmd=cmd,
+                    args=args,
+                    order=1,
+                    action_id=action_5.id)
+
+add_and_commit([command_1])

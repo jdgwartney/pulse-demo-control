@@ -20,9 +20,10 @@ from app import db
 class Action(db.Model):
 
     __tablename__ = 'actions'
+    __table_args__ = (db.UniqueConstraint('name', 'scenario_id', name='_scenario_name_uc'), )
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    name = db.Column(db.String(64))
     commands = db.relationship('Command', backref='Action', lazy='dynamic')
     scenario_id = db.Column(db.Integer, db.ForeignKey('scenarios.id'))
 
@@ -33,9 +34,10 @@ class Action(db.Model):
 class Command(db.Model):
 
     __tablename__ = 'commands'
+    __table_args__ = (db.UniqueConstraint('name', 'action_id', name='_action_name_uc'), )
 
     id = db.Column(db.Integer,  primary_key=True)
-    name = db.Column(db.String(64), unique=True)
+    name = db.Column(db.String(64))
     cmd = db.Column(db.String(64))
     args = db.Column(db.String(512))
     host = db.Column(db.String(128), default='localhost')
@@ -52,8 +54,10 @@ class Scenario(db.Model):
     __tablename__ = 'scenarios'
 
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128))
+    page = db.Column(db.String(64))
     name = db.Column(db.String(64), unique=True)
     actions = db.relationship('Action', backref='Scenario', lazy='dynamic')
 
     def __repr__(self):
-        return "Scenario({0}, '{1}')".format(self.id, self.name)
+        return "Scenario({0}, '{1}', '{2}', '{3}')".format(self.id, self.name, self.title, self.page)
