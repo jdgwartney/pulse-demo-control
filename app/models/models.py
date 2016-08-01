@@ -40,13 +40,17 @@ class Command(db.Model):
     name = db.Column(db.String(64))
     cmd = db.Column(db.String(64))
     args = db.Column(db.String(512))
-    host = db.Column(db.String(128), default='localhost')
+    host = db.Column(db.String(128))
     order = db.Column(db.Integer)
     action_id = db.Column(db.Integer, db.ForeignKey('actions.id'))
 
     def __repr__(self):
-        return "Command({0}, {1}, '{2}', '{3}', '{4}', '{5}', {6})".format(
-            self.id, self.order, self.host, self.name, self.cmd, self.args, self.action_id)
+        if self.host is not None:
+            host = "'{0}'".format(self.host)
+        else:
+            host = self.host
+        return "Command({0}, {1}, {2}, '{3}', '{4}', '{5}', {6})".format(
+            self.id, self.order, host, self.name, self.cmd, self.args, self.action_id)
 
 
 class Scenario(db.Model):
