@@ -35,7 +35,7 @@ class Action(Resource):
     def lookup(self):
         scenario = app.models.Scenario.query.filter_by(name=self.scenario).first()
         logger.debug("found scenario: name='{0}', id={1}".format(scenario.name, scenario.id))
-        action = app.models.Action.query.filter_by(scenario_id=scenario.id).first()
+        action = app.models.Action.query.filter_by(scenario_id=scenario.id, name=self.action).first()
         logger.debug("found action: name='{0}', id={1}".format(action.name, action.id))
 
         for command in action.commands:
