@@ -20,7 +20,7 @@ from application.api import apis
 from flask_log import Logging
 import logging
 import os
-from application.db.command import Command
+from application.models.models import Command
 
 logger = logging.getLogger(__name__)
 
@@ -32,8 +32,11 @@ flask_log = Logging(app)
 Bootstrap(app)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///' + os.path.join( basedir, 'data.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///' + os.path.join(basedir, 'data.sqlite')
+app.config[' SQLALCHEMY_COMMIT_ON_TEARDOWN'] = False
+
 db = SQLAlchemy(app)
+db.create_all()
 
 
 @app.errorhandler(404)
