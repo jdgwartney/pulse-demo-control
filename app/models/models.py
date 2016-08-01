@@ -39,7 +39,7 @@ class Command(db.Model):
     cmd = db.Column(db.String(64))
     args = db.Column(db.String(512))
     host = db.Column(db.String(128), default='localhost')
-    order = db.Column(db.Integer, unique=True)
+    order = db.Column(db.Integer)
     action_id = db.Column(db.Integer, db.ForeignKey('actions.id'))
 
     def __repr__(self):
