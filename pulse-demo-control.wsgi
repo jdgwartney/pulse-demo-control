@@ -15,4 +15,5 @@
 #
 import sys
 sys.path.insert(0, "/var/www/pulse-demo-control")
-from app import app as application
+from app import create_app
+application = create_app('production')
