@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 #
-# Copyright 2015 BMC Software, Inc.
+# Copyright 2016 BMC Software, Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +14,7 @@
 # limitations under the License.
 #
 
-from application import db
+from app import db
 
 
 class Action(db.Model):

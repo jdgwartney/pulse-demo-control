@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 #
 # Copyright 2016 BMC Software, Inc.
 #
@@ -17,7 +16,7 @@
 
 from scenario import Scenario
 from action import Action
-from application.api.control.deploy_app import set_application_revision
+from app.api.control.deploy_app import set_application_revision
 
 
 class PushBasePage(Action):
@@ -30,6 +29,8 @@ class PushBasePage(Action):
         self.hosts = None
 
     def run(self):
+        pass
+
 
 class PushGoodPage(PushBasePage):
 

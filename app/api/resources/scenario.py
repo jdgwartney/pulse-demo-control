@@ -2,7 +2,7 @@ from flask import request, make_response
 from flask_restful import Resource
 import logging
 
-from application.api.scenarios import CPULoadOnWebServer
+from app.api.scenarios import CPULoadOnWebServer
 
 logger = logging.getLogger(__name__)
 

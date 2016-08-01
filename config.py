@@ -14,11 +14,11 @@
 # limitations under the License.
 #
 import os
-basedir = os.path.abspath(os.path.dirname(__FILE__))
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
-
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = False
 
 
@@ -28,6 +28,7 @@ class Config(object):
 
 
 class DevelopmentConfig(Config):
+    FLASK_LOG_LEVEL = 'DEBUG'
 
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or 'sqlite:///' \
                                                                     + os.path.join(basedir, 'data-dev.sqlite')
