@@ -39,7 +39,7 @@ def aws_opsworks_update_app(app_id, revision):
 def aws_opsworks_create_deployment(stack_id, app_id, instance_ids):
     ids = ' '.join(instance_ids)
     return ('aws',
-            "{args} --stack-id {stack_id} --app-id {app_id} --command {command} --instance_ids {instance_ids}".format(
+            "{args} --stack-id {stack_id} --app-id {app_id} --command '{command}' --instance-ids {instance_ids}".format(
                 args='opsworks create-deployment',
                 stack_id=stack_id,
                 app_id=app_id,
@@ -96,6 +96,8 @@ WEB_INSTANCES = [
     '91f84a7b-c7d3-443c-9dc9-ce4c3692310d'
 ]
 
+AWS_HOST = None
+
 action_1 = Action(name='reset', scenario_id=scenario_devops.id)
 action_2 = Action(name='bad_page_to_host', scenario_id=scenario_devops.id)
 action_3 = Action(name='revert_bad_page_to_host', scenario_id=scenario_devops.id)
@@ -104,82 +106,51 @@ action_5 = Action(name='improved_page_to_all_hosts', scenario_id=scenario_devops
 
 add_and_commit([action_1, action_2, action_3, action_4, action_5])
 
-# Action 1 Commands
+# Reset
 (cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=BASE_APP_BRANCH)
 command_1 = Command(name='set base revision', cmd=cmd, args=args, order=1, action_id=action_1.id)
 
-(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
-                                             instance_ids=WEB_INSTANCES)
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID, instance_ids=WEB_INSTANCES)
 command_2 = Command(name='deploy base revision', cmd=cmd, args=args, order=2, action_id=action_1.id)
 
 add_and_commit([command_1, command_2])
 
-# Action 2 Commands
+# Step 1 - Deploy Change to a Single Node
 
 (cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=BAD_APP_BRANCH)
-command_1 = Command(name='set bad revision',
-                    cmd=cmd,
-                    args=args,
-                    order=1,
-                    action_id=action_2.id)
+command_1_1 = Command(name='set bad revision', cmd=cmd, args=args, order=1, host=AWS_HOST, action_id=action_2.id)
 
-(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
-                                             instance_ids=WEB_TEST_INSTANCES)
-command_2 = Command(name='deploy bad revision',
-                    cmd=cmd,
-                    args=args,
-                    order=2,
-                    action_id=action_2.id)
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID, instance_ids=WEB_TEST_INSTANCES)
+command_1_2 = Command(name='deploy bad revision', cmd=cmd, args=args, order=2, host=AWS_HOST, action_id=action_2.id)
 
-add_and_commit([command_1, command_2])
-add_and_commit([command_1])
+add_and_commit([command_1_1, command_1_2])
 
-# Action 3 Commands
+# Step-2 Revert Code Change
 
 (cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=BASE_APP_BRANCH)
-command_1 = Command(name='set base revision',
-                    cmd=cmd,
-                    args=args,
-                    order=1,
-                    action_id=action_3.id)
+command_2_1 = Command(name='set base revision', cmd=cmd, args=args, order=1, host=AWS_HOST, action_id=action_3.id)
 
 (cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
                                              instance_ids=WEB_TEST_INSTANCES)
-command_2 = Command(name='deploy base revision',
-                    cmd=cmd,
-                    args=args,
-                    order=2,
-                    action_id=action_3.id)
+command_2_2 = Command(name='deploy base revision', cmd=cmd, args=args, order=2, host=AWS_HOST, action_id=action_3.id)
 
-add_and_commit([command_1, command_2])
+add_and_commit([command_2_1, command_2_2])
 
-# Action 4 Commands
+# Step 4 - Deploy Revised Code Change
 
 (cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=IMPROVED_APP_BRANCH)
-command_1 = Command(name='set improved revision',
-                    cmd=cmd,
-                    args=args,
-                    order=1,
-                    action_id=action_4.id)
+command_4_1 = Command(name='set improved revision', cmd=cmd, args=args, order=1, host=AWS_HOST, action_id=action_4.id)
 
 (cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
                                              instance_ids=WEB_TEST_INSTANCES)
-command_2 = Command(name='deploy improved revision',
-                    cmd=cmd,
-                    args=args,
-                    order=2,
-                    action_id=action_4.id)
+command_4_2 = Command(name='deploy improved revision', cmd=cmd, args=args, order=2, host=AWS_HOST, action_id=action_4.id)
 
-add_and_commit([command_1, command_2])
+add_and_commit([command_4_1, command_4_2])
 
-# Action 5 Commands
+# Step 5 - Deploy to Code Change to All Nodes
 
 (cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
                                              instance_ids=WEB_INSTANCES)
-command_1 = Command(name='deploy improved revision to all hosts',
-                    cmd=cmd,
-                    args=args,
-                    order=1,
-                    action_id=action_5.id)
+command_5_1 = Command(name='deploy to all hosts', cmd=cmd, args=args, order=1, host=AWS_HOST, action_id=action_5.id)
 
-add_and_commit([command_1])
+add_and_commit([command_5_1])
