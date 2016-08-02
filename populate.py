@@ -141,8 +141,7 @@ add_and_commit([command_2_1, command_2_2])
 (cmd, args) = aws_opsworks_update_app(app_id=APPLICATION_ID, revision=IMPROVED_APP_BRANCH)
 command_4_1 = Command(name='set improved revision', cmd=cmd, args=args, order=1, host=AWS_HOST, action_id=action_4.id)
 
-(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID,
-                                             instance_ids=WEB_TEST_INSTANCES)
+(cmd, args) = aws_opsworks_create_deployment(stack_id=STACK_ID, app_id=APPLICATION_ID, instance_ids=WEB_TEST_INSTANCES)
 command_4_2 = Command(name='deploy improved revision', cmd=cmd, args=args, order=2, host=AWS_HOST, action_id=action_4.id)
 
 add_and_commit([command_4_1, command_4_2])

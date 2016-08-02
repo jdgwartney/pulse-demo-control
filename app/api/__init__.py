@@ -17,6 +17,7 @@ from flask import Blueprint
 from flask_restful import Api
 
 from app.api.resources.action import Action
+from app.api.resources.sleep import Sleep
 
 import logging
 
@@ -27,3 +28,4 @@ api = Blueprint('api', __name__)
 routes = Api(api)
 
 routes.add_resource(Action, '/action')
+routes.add_resource(Sleep, '/sleep')
