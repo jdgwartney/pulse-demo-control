@@ -54,12 +54,15 @@ function launchApplication(l_url, l_windowName) {
     }
     if (typeof launchApplication.winRefs[l_windowName] == 'undefined' ||
         launchApplication.winRefs[l_windowName].closed) {
-        var l_width = screen.availWidth/2;
+        var l_width = screen.availWidth / 2;
         var l_height = screen.availHeight;
-        var l_left = screen.availWidth/2;
+        var l_left = screen.availWidth / 2;
         var l_params = 'status=1' +
             ',resizable=1' +
+            ',menubar=1' +
+            ',resizable=0' +
             ',scrollbars=1' +
+            ',titlebar=1' +
             ',width=' + l_width +
             ',height=' + l_height +
             ',left=' + l_left +
