@@ -1,0 +1,13 @@
+site_name: Pulse Demonstration Environment
+site_author: 'David Gwartney'
+copyright: '2016 BMC Software, Inc. All rights reserved' 
+docs_dir: 'manuscript'
+site_description: 'Documention on the development and use of the Pulse Domonstration Environment'
+site_favicon: favicon.ico
+extra_css: [extra.css]
+
+theme: readthedocs
+
+pages:
+- Home: index.md
+
