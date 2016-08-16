@@ -92,14 +92,14 @@ web_1 = '4f9685d9-43f9-4926-81be-4b815f7086f2',
 web_2 = '36bacec9-63e1-4739-b63c-0720dd05ef01',
 web_3 = '0e8577f3-dde4-4ec0-b020-35c62f6d2652',
 web_4 = '46932149-a21d-4570-869e-954baf3a46e9',
-web_5 = '88d7b128-c3d7-4b37-a977-d16fe44e1c71'
+web_5 = '4c9e4705-d793-4c6e-8a20-d53cc7e5dcdf'
 
 WEB_INSTANCES = [
     '4f9685d9-43f9-4926-81be-4b815f7086f2',
     '36bacec9-63e1-4739-b63c-0720dd05ef01',
     '0e8577f3-dde4-4ec0-b020-35c62f6d2652',
     '46932149-a21d-4570-869e-954baf3a46e9',
-    '88d7b128-c3d7-4b37-a977-d16fe44e1c71'
+    '4c9e4705-d793-4c6e-8a20-d53cc7e5dcdf'
 ]
 
 AWS_HOST = None
